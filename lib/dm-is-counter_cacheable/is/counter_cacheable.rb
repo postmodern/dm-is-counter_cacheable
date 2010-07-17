@@ -85,7 +85,7 @@ module DataMapper
         #
         def destroy(*arguments)
           if self.class.counter_cache
-            self.class.counter_cache do |relationship,property|
+            self.class.counter_cache.each do |relationship,property|
               parent_resource = self.send(relationship)
 
               count = parent_resource.attribute_get(property)
