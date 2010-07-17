@@ -8,7 +8,9 @@ describe DataMapper::Is::CounterCacheable do
         {:title => 'Hello', :body => 'Hello there.'}
       ]
     )
+  end
 
+  before(:each) do
     @user = User.first
     @post = @user.posts.first
   end
@@ -38,7 +40,25 @@ describe DataMapper::Is::CounterCacheable do
     (new_counter - orig_counter).should == 1
   end
 
+  it "should increment the counter cache by 1 when a new resource is saved" do
+    orig_counter = @post.comments_counter
+
+    @post.comments.new(
+      :body => 'omg',
+      :user => @user
+    ).save
+
+    new_counter = @post.comments_counter
+
+    (new_counter - orig_counter).should == 1
+  end
+
   it "should decrement the counter cache by 1 when a resource is destroyed" do
+    @post.comments.create(
+      :body => 'wtf',
+      :user => @user
+    )
+
     orig_counter = @post.comments_counter
 
     @post.comments.first.destroy
