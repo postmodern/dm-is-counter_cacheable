@@ -6,7 +6,7 @@
 
 ## Description
 
-A DataMapper plugin for adding counter-cache properties to models and their relations.
+A DataMapper plugin for adding counter-cache properties to related models.
 
 ## Example
 
