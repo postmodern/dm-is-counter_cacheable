@@ -1,8 +1,4 @@
 require 'spec_helper'
-require 'dm-is-counter_cacheable'
-
-require 'integration/models/post'
-require 'integration/models/comment'
 
 describe DataMapper::Is::CounterCacheable do
   before(:all) do
@@ -14,7 +10,7 @@ describe DataMapper::Is::CounterCacheable do
     )
 
     @user = User.first
-    @post = @user.post
+    @post = @user.posts.first
   end
 
   it "should define the default counter cache property" do
