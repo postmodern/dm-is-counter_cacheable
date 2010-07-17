@@ -68,6 +68,7 @@ module DataMapper
 
               count = parent_resource.attribute_get(property)
               parent_resource.attribute_set(property,count + 1)
+              parent_resource.save
             end
           end
 
@@ -83,14 +84,13 @@ module DataMapper
         #   Specifies whether the resource was successfully destroyed.
         #
         def destroy(*arguments)
-          puts self.class.counter_cache.inspect
-
           if self.class.counter_cache
             self.class.counter_cache do |relationship,property|
               parent_resource = self.send(relationship)
 
               count = parent_resource.attribute_get(property)
               parent_resource.attribute_set(property,count - 1)
+              parent_resource.save
             end
           end
 
