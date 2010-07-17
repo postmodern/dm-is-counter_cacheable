@@ -27,8 +27,14 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "dm-is-counter_cacheable.gemspec",
     "lib/dm-is-counter_cacheable.rb",
-    "lib/dm-is-counter_cacheable/is/counter_cacheable.rb"
+    "lib/dm-is-counter_cacheable/is/counter_cacheable.rb",
+    "spec/integration/counter_cacheable_spec.rb",
+    "spec/integration/models/comment.rb",
+    "spec/integration/models/post.rb",
+    "spec/integration/models/user.rb",
+    "spec/spec_helper.rb"
   ]
   s.has_rdoc = %q{yard}
   s.homepage = %q{http://github.com/postmodern/dm-is-counter_cacheable}
@@ -36,6 +42,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{A DataMapper plugin for adding counter-cache properties to related models.}
+  s.test_files = [
+    "spec/integration/counter_cacheable_spec.rb",
+    "spec/integration/models/comment.rb",
+    "spec/integration/models/post.rb",
+    "spec/integration/models/user.rb",
+    "spec/spec_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
