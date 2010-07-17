@@ -24,4 +24,27 @@ describe DataMapper::Is::CounterCacheable do
   it "should have a counter cache of 0 by default" do
     @post.comments_counter.should == 0
   end
+
+  it "should increment the counter cache by 1 when a new resource is created" do
+    orig_counter = @post.comments_counter
+
+    @post.comments.create(
+      :body => 'lol',
+      :user => @user
+    )
+
+    new_counter = @post.comments_counter
+
+    (new_counter - orig_counter).should == 1
+  end
+
+  it "should decrement the counter cache by 1 when a resource is destroyed" do
+    orig_counter = @post.comments_counter
+
+    @post.comments.first.destroy
+
+    new_counter = @post.comments_counter
+
+    (new_counter - orig_counter).should == -1
+  end
 end
