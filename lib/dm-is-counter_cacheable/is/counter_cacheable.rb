@@ -37,12 +37,12 @@ module DataMapper
             raise(RuntimeError,"unknown relationship #{relationship_name} in #{self}",caller)
           end
 
-          if options.has_key?(:counter_property)
-            counter_property = options[:counter_property]
-          else
-            model_name = self.name.split('::').last
-            counter_property = (DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(model_name) + '_counter').to_sym
-          end
+          model_name = DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(self.name.split('::').last)
+          counter_property = if options.has_key?(:counter_property)
+                               options[:counter_property]
+                             else
+                               :"#{model_name}_counter"
+                             end
 
           relationship = self.relationships[relationship_name]
           parent_model = case relationship
@@ -54,7 +54,7 @@ module DataMapper
           parent_model.property counter_property, Integer, :default => 0, :min => 0
 
           if options[:counter_index]
-            counter_index = :"#{counter_property}_index"
+            counter_index = :"#{relationship_name}_#{model_name}_index"
 
             self.property counter_index, Integer, :min => 1
           else
