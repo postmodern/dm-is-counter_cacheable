@@ -24,11 +24,14 @@ module DataMapper
         # @option options [Symbol] :counter_property
         #   The optional property name to store the counter cache in.
         #
+        # @option options [Boolean] :counter_index
+        #   Specifies to store the current count in newly created resources.
+        #
         # @return [DataMapper::Property]
         #   The newly added counter cache property.
         #
         def counter_cacheable(relationship_name,options={})
-          @counter_cache ||= {}
+          @counter_cache ||= []
 
           unless self.relationships.has_key?(relationship_name)
             raise(RuntimeError,"unknown relationship #{relationship_name} in #{self}",caller)
@@ -50,7 +53,19 @@ module DataMapper
 
           parent_model.property counter_property, Integer, :default => 0, :min => 0
 
-          @counter_cache[relationship_name] = counter_property
+          if options[:counter_index]
+            counter_index = :"#{counter_property}_index"
+
+            self.property counter_index, Integer, :min => 1
+          else
+            counter_index = nil
+          end
+
+          @counter_cache << {
+            :relationship => relationship_name,
+            :counter_property => counter_property,
+            :counter_index => counter_index
+          }
         end
       end
 
@@ -65,11 +80,17 @@ module DataMapper
         #
         def _save(*arguments)
           if (self.new? && self.class.counter_cache)
-            self.class.counter_cache.each do |relationship,property|
-              parent_resource = self.send(relationship)
+            self.class.counter_cache.each do |options|
+              parent_resource = self.send(options[:relationship])
 
-              count = parent_resource.attribute_get(property)
-              parent_resource.attribute_set(property,count + 1)
+              count = parent_resource.attribute_get(options[:counter_property])
+              count += 1
+
+              parent_resource.attribute_set(options[:counter_property],count)
+
+              if options[:counter_index]
+                self.attribute_set(options[:counter_index],count)
+              end
             end
           end
 
@@ -84,11 +105,11 @@ module DataMapper
         #
         def _destroy(*arguments)
           if self.class.counter_cache
-            self.class.counter_cache.each do |relationship,property|
-              parent_resource = self.send(relationship)
+            self.class.counter_cache.each do |options|
+              parent_resource = self.send(options[:relationship])
 
-              count = parent_resource.attribute_get(property)
-              parent_resource.attribute_set(property,count - 1)
+              count = parent_resource.attribute_get(options[:counter_property])
+              parent_resource.attribute_set(options[:counter_property],count - 1)
             end
           end
 
