@@ -14,8 +14,8 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   gem.name = 'dm-is-counter_cacheable'
   gem.license = 'MIT'
-  gem.summary = %Q{}
-  gem.description = %Q{}
+  gem.summary = %Q{A DataMapper plugin for adding counter-cache properties to related models.}
+  gem.description = %Q{A DataMapper plugin for adding counter-cache properties to related models.}
   gem.email = 'postmodern.mod3@gmail.com'
   gem.homepage = 'http://github.com/postmodern/dm-is-counter_cacheable'
   gem.authors = ['Postmodern']
