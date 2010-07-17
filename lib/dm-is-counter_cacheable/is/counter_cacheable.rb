@@ -34,10 +34,15 @@ module DataMapper
             raise(RuntimeError,"unknown relationship #{relationship_name} in #{self}",caller)
           end
 
-          counter_property = options[:counter_property]
-          counter_property ||= DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(self.model_name) + '_counter'
+          if options.has_key?(:counter_property)
+            counter_property = options[:counter_property]
+          else
+            model_name = self.name.split('::').last
+            counter_property = DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(model_name) + '_counter'
+          end
 
-          parent_model = case self.relationships[relationship_name]
+          relationship = self.relationships[relationship_name]
+          parent_model = case relationship
                          when DataMapper::Associations::ManyToOne::Relationship,
                               DataMapper::Associations::OneToOne::Relationship
                            relationship.parent_model
