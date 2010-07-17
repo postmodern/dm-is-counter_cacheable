@@ -48,7 +48,7 @@ module DataMapper
                            relationship.parent_model
                          end
 
-          parent_model.property counter_property, Integer, :default => 0
+          parent_model.property counter_property, Integer, :default => 0, :min => 0
 
           @counter_cache[relationship_name] = counter_property
         end
