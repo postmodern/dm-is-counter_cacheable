@@ -70,7 +70,6 @@ module DataMapper
 
               count = parent_resource.attribute_get(property)
               parent_resource.attribute_set(property,count + 1)
-              parent_resource.save
             end
           end
 
@@ -90,7 +89,6 @@ module DataMapper
 
               count = parent_resource.attribute_get(property)
               parent_resource.attribute_set(property,count - 1)
-              parent_resource.save
             end
           end
 
