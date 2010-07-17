@@ -53,13 +53,15 @@ module DataMapper
           @counter_cache[relationship_name] = counter_property
         end
 
+        private
+
         #
         # Creates a resource and increments the cache counters of the model.
         #
         # @return [DataMapper::Resource]
         #   The new resource.
         #
-        def create(*arguments)
+        def _create(*arguments)
           resource = super(*arguments)
 
           if self.counter_cache
@@ -77,13 +79,15 @@ module DataMapper
       end
 
       module InstanceMethods
+        private
+
         #
         # Destroys a resource and decrements the cache counters of the model.
         #
         # @return [Boolean]
         #   Specifies whether the resource was successfully destroyed.
         #
-        def destroy(*arguments)
+        def _destroy(*arguments)
           if self.class.counter_cache
             self.class.counter_cache.each do |relationship,property|
               parent_resource = self.send(relationship)
