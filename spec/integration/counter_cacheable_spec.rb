@@ -14,11 +14,11 @@ describe DataMapper::Is::CounterCacheable do
   end
 
   it "should define the default counter cache property" do
-    Post.properties.should have_property('comments_counter')
+    Post.properties.should be_named('comments_counter')
   end
 
   it "should allow defining custom named counter cache properties" do
-    User.properties.should have_property('post_comments_counter')
+    User.properties.should be_named('post_comments_counter')
   end
 
   it "should have a counter cache of 0 by default" do
