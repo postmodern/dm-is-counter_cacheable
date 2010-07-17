@@ -23,6 +23,10 @@ describe DataMapper::Is::CounterCacheable do
     User.properties.should be_named('post_comments_counter')
   end
 
+  it "should optionally define a counter index column" do
+    Comment.properties.should be_named('users_index')
+  end
+
   it "should have a counter cache of 0 by default" do
     @post.comments_counter.should == 0
   end
@@ -38,6 +42,15 @@ describe DataMapper::Is::CounterCacheable do
     new_counter = @post.comments_counter
 
     (new_counter - orig_counter).should == 1
+  end
+
+  it "should increment the counter cache by 1 when a new resource is created" do
+    @post.comments.create(
+      :body => 'lol',
+      :user => @user
+    )
+
+    @post.comments.last.users_index.should == 1
   end
 
   it "should increment the counter cache by 1 when a new resource is saved" do

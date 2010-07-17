@@ -17,6 +17,7 @@ class Comment
   belongs_to :user
 
   counter_cacheable :post
-  counter_cacheable :user, :counter_property => :post_comments_counter
+  counter_cacheable :user, :counter_property => :post_comments_counter,
+                           :counter_index => true
 
 end
