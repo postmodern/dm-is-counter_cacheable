@@ -38,7 +38,7 @@ module DataMapper
             counter_property = options[:counter_property]
           else
             model_name = self.name.split('::').last
-            counter_property = DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(model_name) + '_counter'
+            counter_property = (DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(model_name) + '_counter').to_sym
           end
 
           relationship = self.relationships[relationship_name]
@@ -60,7 +60,7 @@ module DataMapper
         #   The new resource.
         #
         def create(*arguments)
-          resource = super(arguments)
+          resource = super(*arguments)
 
           if self.counter_cache
             self.counter_cache.each do |relationship,property|
@@ -70,6 +70,8 @@ module DataMapper
               parent_resource.attribute_set(property,count + 1)
             end
           end
+
+          resource
         end
       end
 
@@ -81,6 +83,8 @@ module DataMapper
         #   Specifies whether the resource was successfully destroyed.
         #
         def destroy(*arguments)
+          puts self.class.counter_cache.inspect
+
           if self.class.counter_cache
             self.class.counter_cache do |relationship,property|
               parent_resource = self.send(relationship)
