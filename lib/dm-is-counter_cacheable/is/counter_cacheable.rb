@@ -18,6 +18,12 @@ module DataMapper
         # @param [Symbol] relationship_name
         #   The name of the related model.
         #
+        # @param [Hash] options
+        #   Additional options.
+        #
+        # @option options [Symbol] :counter_property
+        #   The optional property name to store the counter cache in.
+        #
         # @return [DataMapper::Property]
         #   The newly added counter cache property.
         #
@@ -28,8 +34,8 @@ module DataMapper
             raise(RuntimeError,"unknown relationship #{relationship_name} in #{self}",caller)
           end
 
-          counter_name = options[:counter_name]
-          counter_name ||= DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(self.model_name) + '_counter'
+          counter_property = options[:counter_property]
+          counter_property ||= DataMapper::NamingConventions::Resource::UnderscoredAndPluralized.call(self.model_name) + '_counter'
 
           parent_model = case self.relationships[relationship_name]
                          when DataMapper::Associations::ManyToOne::Relationship,
@@ -37,9 +43,9 @@ module DataMapper
                            relationship.parent_model
                          end
 
-          parent_model.property @counter_name, Integer, :default => 0
+          parent_model.property counter_property, Integer, :default => 0
 
-          @counter_cache[relationship_name] = counter_name
+          @counter_cache[relationship_name] = counter_property
         end
 
         #
