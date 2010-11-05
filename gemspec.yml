@@ -1,4 +1,5 @@
 name: dm-is-counter_cacheable
+version: 0.1.0
 summary: DataMapper plugin for adding counter-caching to models.
 description:
   A DataMapper plugin for adding counter-cache properties to related models.
