@@ -1,15 +1,4 @@
-require 'rubygems'
-require 'bundler'
-
-begin
-  Bundler.setup(:test)
-rescue Bundler::BundlerError => e
-  STDERR.puts e.message
-  STDERR.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
-end
-
-require 'spec'
+require 'rspec'
 require 'dm-core/spec/setup'
 require 'dm-core/spec/lib/adapter_helpers'
 
@@ -21,10 +10,6 @@ require 'integration/models/comment'
 
 DataMapper::Spec.setup
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.extend(DataMapper::Spec::Adapters::Helpers)
-
-  config.before(:suite) do
-    DataMapper.auto_migrate!
-  end
 end

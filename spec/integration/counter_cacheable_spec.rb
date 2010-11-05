@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe DataMapper::Is::CounterCacheable do
   before(:all) do
+    DataMapper.auto_migrate!
+
     User.create(
       :name => 'bob',
       :posts => [
