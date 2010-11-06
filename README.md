@@ -10,6 +10,29 @@ A DataMapper plugin for adding counter-cache properties to related models.
 
 ## Example
 
+Adds counter properties to Post and User for the number of comments:
+
+    require 'dm-core'
+    
+    class Comment
+    
+      include DataMapper::Resource
+    
+      is :counter_cacheable
+    
+      property :id, Serial
+    
+      property :body, Text
+    
+      belongs_to :post
+    
+      belongs_to :user
+    
+      counter_cacheable :post
+      counter_cacheable :user, :counter_property => :post_comments_counter
+    
+    end
+
 ## Requirements
 
 * [dm-core](http://github.com/datamapper/dm-core/) ~> 1.0.0
