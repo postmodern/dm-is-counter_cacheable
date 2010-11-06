@@ -1,4 +1,6 @@
-### 0.1.0 / 2010-07-17
+### 0.1.0 / 2010-11-05
 
-* Initial release.
+* Initial release:
+  * Supports adding counter cache columns to `belongs_to` relationships.
+  * Supports custom names for counter cache columns.
 
