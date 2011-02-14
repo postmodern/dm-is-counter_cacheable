@@ -35,7 +35,7 @@ Adds counter properties to Post and User for the number of comments:
 
 ## Requirements
 
-* [dm-core](http://github.com/datamapper/dm-core/) ~> 1.0.0
+* [dm-core](http://github.com/datamapper/dm-core/) ~> 1.0
 
 ## Install
 
