@@ -33,7 +33,7 @@ module DataMapper
         def counter_cacheable(relationship_name,options={})
           @counter_cache ||= []
 
-          unless self.relationships.has_key?(relationship_name)
+          unless self.relationships.named?(relationship_name)
             raise(RuntimeError,"unknown relationship #{relationship_name} in #{self}",caller)
           end
 
