@@ -1,8 +1,9 @@
 # dm-is-countercacheable
 
-* [github.com/postmodern/dm-is-counter_cacheable](http://github.com/postmodern/dm-is-counter_cacheable)
-* [github.com/postmodern/dm-is-counter_cacheable/issues](http://github.com/postmodern/dm-is-counter_cacheable/issues)
-* Postmodern (postmodern.mod3 at gmail.com)
+* [Source](http://github.com/postmodern/dm-is-counter_cacheable)
+* [Issues](http://github.com/postmodern/dm-is-counter_cacheable/issues)
+* [Docuementation](http://rubydoc.info/gems/dm-is-counter_cacheable)
+* [Email](mailto:postmodern.mod3 at gmail.com)
 
 ## Description
 
@@ -43,5 +44,6 @@ Adds counter properties to Post and User for the number of comments:
 
 ## License
 
-See {file:LICENSE.txt} for license information.
+Copyright (c) 2008-2011 Hal Brodigan
 
+See {file:LICENSE.txt} for license information.
