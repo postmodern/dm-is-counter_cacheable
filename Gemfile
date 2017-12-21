@@ -95,7 +95,7 @@ group :development do
   gem 'rspec',		      '~> 2.4'
 
   gem 'kramdown',   '~> 0.12'
-  gem 'yard',		    '~> 0.6'
+  gem 'yard',		    '~> 0.9'
 end
 
 group :datamapper do
